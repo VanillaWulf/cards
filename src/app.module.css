@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    padding: 20px 20px 0 20px;
+}
+
+.link {
+    padding: 10px;
+    border: 1px solid #330099;
+    color: #330099;
+    text-transform: none;
+}
+
+.link:hover {
+    opacity: 0.8;
+}

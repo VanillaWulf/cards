@@ -9,10 +9,12 @@ import {ACTIONS} from "../../enums/enums";
 const CardBoard = () => {
     const dispatch  = useDispatch();
     const cards = useSelector((state:Istate) => state.board);
+
     const handleOnSubmit = (cardId: number) : void => {
         console.log('handle click', cardId);
         dispatch({type: ACTIONS.CHANGE_CARD_COLOR, payload: cardId});
     };
+
     return <div className={styles.board}>
         {cards.map((cardItem: Icard) => { return <Card key={cardItem.id} card={cardItem} handleOnSubmit={(cardId) => handleOnSubmit(cardId)} />})}
     </div>

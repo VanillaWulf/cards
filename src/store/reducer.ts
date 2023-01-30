@@ -4,7 +4,7 @@ import {ACTIONS, COLORS} from '../enums/enums'
 
 const defaultState =  {
     board: board,
-    activeColor: COLORS.RED,
+    activeColor: 'green',
     colors: [
         {
             name: 'open',
@@ -36,7 +36,27 @@ export const reducer = (state = defaultState, action: any) => {
             }
 
 
-            return {...state, colors: newColors};
+            return {...state, colors: newColors, activeColor: newActiveColor};
+        }
+        case ACTIONS.DELETE_COLOR:
+        {
+            const newColors = [...state.colors];
+            console.log(action.payload);
+            let newActiveColor = '';
+            const deleteItem = newColors.findIndex((item) => item.id = action.payload);
+            console.log(deleteItem);
+            /*добавить логику смены цвета*/
+            newColors.splice(1, 1);
+            console.log(newColors);
+            // let indexItem = state.colors.findIndex((e) => e.id === action.payload);
+            //
+            // if(indexItem > -1) {
+            //     newColors[indexItem].isSelected = true;
+            //     newActiveColor = newColors[indexItem].color
+            // }
+
+
+            return {...state, colors: newColors, activeColor: '#fff'};
         }
         case ACTIONS.ADD_COLOR:
         {
@@ -48,7 +68,7 @@ export const reducer = (state = defaultState, action: any) => {
             let indexItem = state.board.findIndex((e) => e.id === action.payload);
 
             if(indexItem > -1) {
-                newBoard[indexItem].color = newBoard[indexItem].color === COLORS.RED ? '' : COLORS.RED;
+                newBoard[indexItem].color = newBoard[indexItem].color === state.activeColor ? '#EEFFEE' : state.activeColor;
             }
             return {...state, board: newBoard };
         }

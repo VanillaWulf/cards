@@ -5,6 +5,7 @@ import {Icolor} from "../../models/Icolor";
 interface Iprops {
     color: Icolor;
     handleOnSubmit: (num: number) => void;
+    handleOnDelete: (num: number) => void;
 }
 
 const ColorItem = (props: Iprops) => {
@@ -12,13 +13,16 @@ const ColorItem = (props: Iprops) => {
     return (
 
         <div>
-            <button onClick={() => props.handleOnSubmit(props.color.id)} className={`${props.color.isSelected ? styles.isSelected : styles.colorItem }`}>
+            <div className={`${styles.item} ${props.color.isSelected ? styles.isSelected : styles.colorItem}`}>
                 <div className={styles.color} style={{background: props.color.color}}>
                 </div>
                 <div className={styles.name}>
                     {props.color && props.color.name} - {props.color && props.color.color}
                 </div>
-             </button>
+                <button onClick={() => props.handleOnSubmit(props.color.id)}>Choose</button>
+                <button>edit</button>
+                <button onClick={() => props.handleOnDelete(props.color.id)}>delete</button>
+             </div>
        </div>
     )
 };

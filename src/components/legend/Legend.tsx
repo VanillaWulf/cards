@@ -3,23 +3,23 @@ import styles from './legend.module.css';
 
 import {useDispatch, useSelector} from "react-redux";
 import ColorItem from "../color-item/Color-item";
-import {Istate} from "../../models/Istate";
-import {ACTIONS} from "../../enums/enums";
+import {IState} from "../../models/IState";
 import ColorPopup from "../color-popup/color-popup";
+import {changeColorAction, deleteColorAction, addColorAction} from "../../store/reducer";
 
 const Legend = () => {
 
-    const colors = useSelector((state: Istate )=> state.colors);
+    const colors = useSelector((state: IState )=> state.colors);
     const dispatch  = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     const handleOnSubmit = (colorId: number) : void => {
-        dispatch({type: ACTIONS.CHANGE_COLOR, payload: colorId});
+        dispatch(changeColorAction(colorId));
     };
 
     const handleOnDelete = (colorId: number) : void => {
-        dispatch({type: ACTIONS.DELETE_COLOR, payload: colorId});
+        dispatch(deleteColorAction(colorId));
     };
 
     const handleClose = () :void => {
@@ -27,12 +27,15 @@ const Legend = () => {
     };
 
     const addColor = (color: string, desc: string): void => {
-        dispatch({type: ACTIONS.ADD_COLOR, payload: {
-                name: desc,
-                color: color,
-                isSelected: false,
-                id: colors[colors.length - 1] &&  colors[colors.length - 1] ?colors[colors.length - 1].id + 1 : undefined
-            }});
+
+        const newColor  = {
+            name: !!desc ? desc : '',
+            color: !!color ? color: '',
+            isSelected: false,
+            id: colors[colors.length - 1] &&  colors[colors.length - 1] ?colors[colors.length - 1].id + 1 : -1
+        };
+
+        dispatch(addColorAction(newColor));
         handleClose();
     };
 

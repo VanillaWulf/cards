@@ -8,7 +8,7 @@ interface Iprops {
 }
 
 const Card = (props: Iprops) => {
-     return <button className={styles.card} onClick={() => props.handleOnSubmit(props.card.id)} style={{background: props.card.color}}>
+     return <button className={styles.card} onClick={() => props.handleOnSubmit(props.card.id)} style={{background: props.card.color.color}}>
       {props.card && props.card.name}
      </button>;
 };

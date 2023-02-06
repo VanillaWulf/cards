@@ -10,5 +10,6 @@ export enum COLORS {
     RED = '#FF0000',
     GREEN =  '#00FF00',
     BLUE = '#0000FF',
-    AQUA = '#00FFFF'
+    AQUA = '#00FFFF',
+    GRAY_DEFAULT = '#EFEFEF'
 }

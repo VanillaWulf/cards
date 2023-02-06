@@ -1,8 +1,8 @@
 import {Icard} from "./Icard";
 import {Icolor} from "./Icolor";
 
-export interface Istate {
+export interface IState {
     board: Icard[],
     colors: Icolor[],
-    activeColor: any
+    activeColor: Icolor
 }

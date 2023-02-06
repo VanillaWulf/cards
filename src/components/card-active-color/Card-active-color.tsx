@@ -1,12 +1,12 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Istate} from "../../models/Istate";
+import {IState} from "../../models/IState";
 import {ACTIONS} from "../../enums/enums";
 import styles from './card-active-color.module.css';
 
 const CardActiveColor = () => {
     const dispatch  = useDispatch();
-    const activeColor = useSelector((state:Istate) => state.activeColor);
+    const activeColor = useSelector((state:IState) => state.activeColor);
 
     // const handleOnSubmit = (cardId: number) : void => {
     //     console.log('handle click', cardId);

@@ -5,11 +5,11 @@ import {Icolor} from "../models/Icolor";
 
 const defaultState = {
     board: board,
-    activeColor:   {
-        name: 'open',
-        color: COLORS.RED,
+    activeColor: {
+        name: 'rise after rise',
+        color: COLORS.AQUA,
         isSelected: true,
-        id: 1
+        id: 3
     },
     colors: [
         {
@@ -39,6 +39,13 @@ const defaultState = {
     ]
 };
 
+const defaultColor = {
+    name: '',
+    color: COLORS.GRAY_DEFAULT,
+    isSelected: false,
+    id: -1
+};
+
 export const reducer = (state = defaultState, action: any) => {
     switch (action.type) {
         case ACTIONS.CHANGE_COLOR: {
@@ -54,21 +61,22 @@ export const reducer = (state = defaultState, action: any) => {
             return {...state, colors: newColors, activeColor: newColors[indexItem]};
         }
         case ACTIONS.DELETE_COLOR: {
-            const newColors = [...state.colors];
-            const indexItem = state.colors.findIndex((item) => item.id === action.payload);
+            let newColors = [...state.colors];
+            let indexItem = state.colors.findIndex((item) => item.id === action.payload);
+            let newBoard = [...state.board];
             let newActiveColor = state.activeColor;
-            if(indexItem > -1) {
+            if(indexItem > -1 && newColors.length > 1) {
                 /*порефакорить удаление через reduce ? */
                 newColors.splice(indexItem, 1);
-                if (indexItem === state.activeColor.id) {
-                    console.log(newColors);
-                    newActiveColor = state.colors[0];
-                    /* обработу isSelected  - переключение на первый + чистку доски*/
+                if (action.payload === state.activeColor.id) {
+                    newActiveColor = newColors[0];
+                    /* читска доски */
+                    newBoard.map((item) => { item.color = item.color.id === action.payload ? defaultColor : item.color});
                     newColors[0].isSelected = true;
                 }
             }
 
-            return {...state, colors: newColors, activeColor: newActiveColor};
+            return {...state, colors: newColors, activeColor: newActiveColor, board: newBoard};
         }
         case ACTIONS.ADD_COLOR: {
             return {...state, colors: state.colors.concat(action.payload)};
@@ -76,13 +84,6 @@ export const reducer = (state = defaultState, action: any) => {
         case ACTIONS.CHANGE_CARD_COLOR: {
             const newBoard = [...state.board];
             let indexItem = state.board.findIndex((e) => e.id === action.payload);
-
-            const defaultColor = {
-                    name: '',
-                    color: COLORS.GRAY_DEFAULT,
-                    isSelected: false,
-                    id: -1
-            };
 
             if (indexItem > -1) {
                 newBoard[indexItem].color = newBoard[indexItem].color.id === state.activeColor.id ? defaultColor : state.activeColor;

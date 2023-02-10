@@ -1,9 +1,13 @@
-export enum ACTIONS  {
+export enum BOARD_ACTIONS  {
     CHANGE_COLOR = 'CHANGE_COLOR',
     LOAD = 'LOAD',
     ADD_COLOR = 'ADD_COLOR',
     DELETE_COLOR = 'DELETE_COLOR',
     CHANGE_CARD_COLOR = 'CHANGE_CARD_COLOR'
+}
+
+export enum PROFILE_ACTIONS  {
+    LOAD = 'LOAD',
 }
 
 export enum COLORS {

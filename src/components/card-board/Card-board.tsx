@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './card-board.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import Card from "../card/Card";
-import {IState} from "../../models/IState";
+import {Istate} from "../../models/Istate";
 import {Icard} from "../../models/Icard";
-import {changeCardColorAction} from "../../store/reducer";
+import {changeCardColorAction} from "../../store/board-reducer";
 
 const CardBoard = () => {
     const dispatch  = useDispatch();
-    const cards = useSelector((state:IState) => state.board);
+    const cards = useSelector((state:Istate) => state.boardPage.board);
 
     const handleOnSubmit = (cardId: number) : void => {
         console.log('handle click', cardId);

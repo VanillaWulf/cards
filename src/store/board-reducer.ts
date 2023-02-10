@@ -1,5 +1,5 @@
 import {board} from "../mock/board";
-import {ACTIONS, COLORS} from '../enums/enums'
+import {BOARD_ACTIONS, COLORS} from '../enums/enums'
 import {Icolor} from "../models/Icolor";
 
 
@@ -46,9 +46,9 @@ const defaultColor = {
     id: -1
 };
 
-export const reducer = (state = defaultState, action: any) => {
+export const boardReducer = (state = defaultState, action: any) => {
     switch (action.type) {
-        case ACTIONS.CHANGE_COLOR: {
+        case BOARD_ACTIONS.CHANGE_COLOR: {
             const newColors = [...state.colors];
             newColors.map((item) => item.isSelected = false);
             let indexItem = state.colors.findIndex((e) => e.id === action.payload);
@@ -60,7 +60,7 @@ export const reducer = (state = defaultState, action: any) => {
 
             return {...state, colors: newColors, activeColor: newColors[indexItem]};
         }
-        case ACTIONS.DELETE_COLOR: {
+        case BOARD_ACTIONS.DELETE_COLOR: {
             let newColors = [...state.colors];
             let indexItem = state.colors.findIndex((item) => item.id === action.payload);
             let newBoard = [...state.board];
@@ -78,10 +78,10 @@ export const reducer = (state = defaultState, action: any) => {
 
             return {...state, colors: newColors, activeColor: newActiveColor, board: newBoard};
         }
-        case ACTIONS.ADD_COLOR: {
+        case BOARD_ACTIONS.ADD_COLOR: {
             return {...state, colors: state.colors.concat(action.payload)};
         }
-        case ACTIONS.CHANGE_CARD_COLOR: {
+        case BOARD_ACTIONS.CHANGE_CARD_COLOR: {
             const newBoard = [...state.board];
             let indexItem = state.board.findIndex((e) => e.id === action.payload);
 
@@ -90,14 +90,14 @@ export const reducer = (state = defaultState, action: any) => {
             }
             return {...state, board: newBoard};
         }
-        case ACTIONS.LOAD:
+        case BOARD_ACTIONS.LOAD:
             return {...state};
         default:
             return state
     }
 };
 
-export const changeColorAction = (payload: number) => ({type: ACTIONS.CHANGE_COLOR, payload});
-export const deleteColorAction = (payload: number) => ({type: ACTIONS.DELETE_COLOR, payload});
-export const addColorAction = (payload: Icolor) => ({type: ACTIONS.ADD_COLOR, payload});
-export const changeCardColorAction = (payload: number) =>({type: ACTIONS.CHANGE_CARD_COLOR, payload})
+export const changeColorAction = (payload: number) => ({type: BOARD_ACTIONS.CHANGE_COLOR, payload});
+export const deleteColorAction = (payload: number) => ({type: BOARD_ACTIONS.DELETE_COLOR, payload});
+export const addColorAction = (payload: Icolor) => ({type: BOARD_ACTIONS.ADD_COLOR, payload});
+export const changeCardColorAction = (payload: number) =>({type: BOARD_ACTIONS.CHANGE_CARD_COLOR, payload})

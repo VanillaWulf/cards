@@ -1,6 +1,12 @@
 import {createStore, combineReducers} from "redux";
-import {reducer} from "./reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
 
+import { boardReducer} from "./board-reducer";
+import { profileReducer } from "./profile-reducer";
 
-export const store = createStore(reducer, composeWithDevTools());
+const rootReducer = combineReducers({
+    boardPage: boardReducer,
+    profilePage: profileReducer
+});
+
+export const store = createStore(rootReducer, composeWithDevTools());

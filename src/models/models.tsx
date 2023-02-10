@@ -1,2 +1,2 @@
-import {IState} from "./IState";
+import {Istate} from "./Istate";
 import {Icard} from "./Icard";

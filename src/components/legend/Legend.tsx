@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './legend.module.css';
 
 import {useDispatch, useSelector} from "react-redux";
 import ColorItem from "../color-item/Color-item";
-import {IState} from "../../models/IState";
+import {Istate} from "../../models/Istate";
 import ColorPopup from "../color-popup/color-popup";
-import {changeColorAction, deleteColorAction, addColorAction} from "../../store/reducer";
+import {changeColorAction, deleteColorAction, addColorAction} from "../../store/board-reducer";
 
 const Legend = () => {
 
-    const colors = useSelector((state: IState )=> state.colors);
+    const colors = useSelector((state: Istate )=> state.boardPage.colors);
     const dispatch  = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
 

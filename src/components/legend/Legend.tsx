@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styles from './legend.module.css';
+import {Icolor} from "../../models/Icolor";
 
 import {useDispatch, useSelector} from "react-redux";
 import ColorItem from "../color-item/Color-item";
@@ -11,7 +12,7 @@ const Legend = () => {
 
     const colors = useSelector((state: Istate )=> state.boardPage.colors);
     const dispatch  = useDispatch();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalOptions, setModalOptions] = useState({isOpen: false, isEdit: false, color: undefined});
 
 
     const handleOnSubmit = (colorId: number) : void => {
@@ -23,7 +24,7 @@ const Legend = () => {
     };
 
     const handleClose = () :void => {
-        setIsModalOpen(!isModalOpen);
+        setModalOptions({isOpen: false, isEdit: false, color: undefined});
     };
 
     const addColor = (color: string, desc: string): void => {
@@ -39,15 +40,22 @@ const Legend = () => {
         handleClose();
     };
 
-    const openPopup = (): void => {
-        setIsModalOpen(true);
+    const openPopup = (isEdit = false, color?: Icolor): void => {
+        setModalOptions({isOpen: true, isEdit: isEdit, color: color? undefined : color });
     };
 
     return <div className={styles.row}>
         {colors.map((colorItem, i) => { return <ColorItem color={colorItem} key={i} handleOnSubmit={(colorId) => handleOnSubmit(colorId)}
-                                                          handleOnDelete={(colorId) => handleOnDelete(colorId)}/>})}
-        <button onClick={openPopup}>Add color</button>
-        <ColorPopup isOpen={isModalOpen} handleClose={handleClose} handleOnSubmit={(color, desc) => addColor(color, desc)}/>
+                                                          handleOnDelete={(colorId) => handleOnDelete(colorId)}
+                                                          handleOpenPopup={(color) => openPopup(true, color)}/>})}
+        <button onClick={() => openPopup()}>Add color</button>
+        <ColorPopup
+            isOpen={modalOptions.isOpen}
+            handleClose={handleClose}
+            isEdit={modalOptions.isEdit}
+            handleOnSubmit={(color, desc) => addColor(color, desc)}
+            color={modalOptions.color}
+        />
     </div>
 };
 

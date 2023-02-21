@@ -90,14 +90,19 @@ export const boardReducer = (state = defaultState, action: any) => {
             }
             return {...state, board: newBoard};
         }
-        case BOARD_ACTIONS.LOAD:
+        case BOARD_ACTIONS.LOAD: {
+            console.log(action.payload);
             return {...state};
+        }
         default:
             return state
     }
 };
 
+/*action creator*/
 export const changeColorAction = (payload: number) => ({type: BOARD_ACTIONS.CHANGE_COLOR, payload});
 export const deleteColorAction = (payload: number) => ({type: BOARD_ACTIONS.DELETE_COLOR, payload});
 export const addColorAction = (payload: Icolor) => ({type: BOARD_ACTIONS.ADD_COLOR, payload});
-export const changeCardColorAction = (payload: number) =>({type: BOARD_ACTIONS.CHANGE_CARD_COLOR, payload})
+export const changeCardColorAction = (payload: number) =>({type: BOARD_ACTIONS.CHANGE_CARD_COLOR, payload});
+export const loadBoard = () => ({type: BOARD_ACTIONS.LOAD});
+export const asyncLoadBoard = () => ({type: BOARD_ACTIONS.ASYNC_LOAD});

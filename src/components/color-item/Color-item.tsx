@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './color-item.module.css';
 import {Icolor} from "../../models/Icolor";
+import ColorPopup from "../color-popup/color-popup";
 
 interface Iprops {
     color: Icolor;
     handleOnSubmit: (num: number) => void;
     handleOnDelete: (num: number) => void;
+    handleOpenPopup: (color: Icolor) => void;
 }
 
 const ColorItem = (props: Iprops) => {
@@ -22,12 +24,12 @@ const ColorItem = (props: Iprops) => {
                     </div>
                     <div>
                         <button onClick={() => props.handleOnSubmit(props.color.id)}>Choose</button>
-                        <button>edit</button>
+                        <button onClick={() => props.handleOpenPopup(props.color)}>edit</button>
                         <button onClick={() => props.handleOnDelete(props.color.id)}>delete</button>
                     </div>
                 </div>
              </div>
-       </div>
+        </div>
     )
 };
 

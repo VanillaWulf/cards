@@ -1,16 +1,24 @@
 import React, {useState} from 'react';
 import styles from './color-popup.module.css';
 import { ChromePicker } from 'react-color';
+import {Icolor} from "../../models/Icolor";
 
 interface Iprops {
     isOpen: boolean;
     handleClose: () => void;
     handleOnSubmit: (color: string, description: string) => void;
+    isEdit?: boolean;
+    color?: Icolor;
 }
 
 const ColorPopup = (props: Iprops) => {
     const [selectedColor, setSelectedColor] = useState('rgb(255,255,255)');
     const [desc, setDesc] = useState('');
+
+    if (props.isEdit) {
+      /*добавить логику для едита*/
+    }
+
 
     return <div className={props.isOpen ? styles.open : styles.closed}>
         <div className={styles.modalWrp}>

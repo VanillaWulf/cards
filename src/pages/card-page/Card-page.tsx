@@ -11,8 +11,9 @@ const CardPage = () => {
     const dispatch = useDispatch();
 
     return <div>
-
-        <CardActiveColor />
+        <div className="container">
+            <CardActiveColor />
+        </div>
         <div className="container text-center">
             <button onClick={() => dispatch(asyncLoadBoard())}>Fetch Board</button>
             <div className="row">

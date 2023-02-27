@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './color-popup.module.css';
 import { ChromePicker } from 'react-color';
 import {Icolor} from "../../models/Icolor";
@@ -8,16 +8,24 @@ interface Iprops {
     handleClose: () => void;
     handleOnSubmit: (color: string, description: string) => void;
     isEdit?: boolean;
-    color?: Icolor;
+    color?: Icolor | undefined;
 }
 
 const ColorPopup = (props: Iprops) => {
-    const [selectedColor, setSelectedColor] = useState('rgb(255,255,255)');
-    const [desc, setDesc] = useState('');
+    const [selectedColor, setSelectedColor] = useState(!!props.color && !!props.color.color? props.color.color : 'rgb(255,255,255)');
+    const [desc, setDesc] = useState(!!props.color && !!props.color.name? props.color.name : '');
 
-    if (props.isEdit) {
-      /*добавить логику для едита*/
-    }
+    // setDesc(props.color && props.color.name? props.color.name : '');
+    // setSelectedColor(props.color && props.color.color? props.color.color : 'rgb(255,255,255)');
+
+    console.log(desc, selectedColor, props.color);
+
+    console.log(!!props.color && !!props.color.color);
+
+    useEffect(() => {
+            setDesc(props.color && props.color.name? props.color.name : '');
+            setSelectedColor(props.color && props.color.color? props.color.color : 'rgb(255,255,255)');
+            }, [props.isEdit]);
 
 
     return <div className={props.isOpen ? styles.open : styles.closed}>
@@ -41,6 +49,7 @@ const ColorPopup = (props: Iprops) => {
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={props.handleClose}>Close</button>
+                    /*доделать isEdit*/
                     <button type="button" className="btn btn-primary" onClick={() => props.handleOnSubmit(selectedColor, desc)}>Save and close</button>
                 </div>
             </div>

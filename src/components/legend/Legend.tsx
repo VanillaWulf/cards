@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './legend.module.css';
-import {Icolor} from "../../models/Icolor";
 
 import {useDispatch, useSelector} from "react-redux";
 import ColorItem from "../color-item/Color-item";
@@ -24,31 +23,41 @@ const Legend = () => {
     };
 
     const handleClose = () :void => {
+        console.log(modalOptions);
         setModalOptions({isOpen: false, isEdit: false, color: undefined});
     };
 
-    const addColor = (color: string, desc: string): void => {
+    const addColor = (color: string, desc: string) : void => {
 
-        const newColor  = {
-            name: !!desc ? desc : '',
-            color: !!color ? color: '',
-            isSelected: false,
-            id: colors[colors.length - 1] &&  colors[colors.length - 1] ?colors[colors.length - 1].id + 1 : -1
-        };
+        // if(isEdit) {
+        //   доделать isEdit
+        // } else {
+            const newColor = {
+                name: !!desc ? desc : '',
+                color: !!color ? color : '',
+                isSelected: false,
+                id: colors[colors.length - 1] && colors[colors.length - 1] ? colors[colors.length - 1].id + 1 : -1
+            };
 
-        dispatch(addColorAction(newColor));
-        handleClose();
+
+            dispatch(addColorAction(newColor));
+            handleClose();
+        // }
     };
 
-    const openPopup = (isEdit = false, color?: Icolor): void => {
-        setModalOptions({isOpen: true, isEdit: isEdit, color: color? undefined : color });
+    const UseOpenPopup = (isEdit = false, color?: any): void => {
+        console.log(isEdit);
+        setModalOptions({isOpen: true, isEdit: isEdit, color: color });
+        // useEffect(() => {
+        //     setModalOptions({isOpen: true, isEdit: isEdit, color: color });
+        // }, [modalOptions])
     };
 
     return <div className={styles.row}>
         {colors.map((colorItem, i) => { return <ColorItem color={colorItem} key={i} handleOnSubmit={(colorId) => handleOnSubmit(colorId)}
                                                           handleOnDelete={(colorId) => handleOnDelete(colorId)}
-                                                          handleOpenPopup={(color) => openPopup(true, color)}/>})}
-        <button onClick={() => openPopup()}>Add color</button>
+                                                          handleOpenPopup={(color) => UseOpenPopup(true, color)}/>})}
+        <button className={'btn btn-primary mt-4'} onClick={() => UseOpenPopup()}>Add color</button>
         <ColorPopup
             isOpen={modalOptions.isOpen}
             handleClose={handleClose}

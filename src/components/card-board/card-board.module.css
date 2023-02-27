@@ -1,7 +1,7 @@
 .board {
     display: flex;
     padding: 20px;
-    background: lightgray;
+    background: #f2e6e6;
     flex-wrap: wrap;
     align-items: flex-start;
 }

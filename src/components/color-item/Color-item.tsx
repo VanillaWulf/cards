@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './color-item.module.css';
 import {Icolor} from "../../models/Icolor";
-import ColorPopup from "../color-popup/color-popup";
 
 interface Iprops {
     color: Icolor;
@@ -14,18 +13,20 @@ const ColorItem = (props: Iprops) => {
 
     return (
 
-        <div className={`${styles.item} ${props.color.isSelected ? styles.isSelected : styles.colorItem}`}>
+        <div className={`${styles.item} ${props.color.isSelected ? 'border border-primary bg-light' : 'border'}`}>
             <div className={styles.itemWrp}>
                 <div className={styles.color} style={{background: props.color.color}}>
                 </div>
-                <div>
+                <div className={styles.descWrp}>
                     <div className={styles.name}>
                         {props.color && props.color.name}
                     </div>
-                    <div>
-                        <button onClick={() => props.handleOnSubmit(props.color.id)}>Choose</button>
-                        <button onClick={() => props.handleOpenPopup(props.color)}>edit</button>
-                        <button onClick={() => props.handleOnDelete(props.color.id)}>delete</button>
+                    <div className={styles.itemBtn}>
+                        <button className="btn btn-primary" onClick={() => props.handleOnSubmit(props.color.id)}>Choose</button>
+                        <div className={styles.btnRow}>
+                            <button className="btn btn-primary" onClick={() => props.handleOpenPopup(props.color)}>edit</button>
+                            <button className="btn btn-danger" onClick={() => props.handleOnDelete(props.color.id)}>delete</button>
+                        </div>
                     </div>
                 </div>
              </div>

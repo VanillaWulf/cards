@@ -11,7 +11,7 @@ function App() {
 
   return (
       <div className="App">
-          <header>
+          <header className="container">
               <nav className="navbar navbar-expand-lg bg-light">
                   <div className="container-fluid">
                       <a className="navbar-brand" href="#">EasyCardApp</a>

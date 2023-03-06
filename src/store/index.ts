@@ -14,6 +14,6 @@ const rootReducer = combineReducers({
 });
 
 // export const store = createStore(rootReducer, composeWithDevTools());
-export const store = createStore(rootReducer, applyMiddleware(sagaMiddleWare));
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleWare)));
 
 sagaMiddleWare.run(fetchBoardWatcher);

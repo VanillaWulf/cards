@@ -81,6 +81,15 @@ export const boardReducer = (state = defaultState, action: any) => {
         case BOARD_ACTIONS.ADD_COLOR: {
             return {...state, colors: state.colors.concat(action.payload)};
         }
+        case BOARD_ACTIONS.UPDATE_COLOR: {
+            let newColors = [...state.colors];
+            let indexItem = newColors.findIndex((item) => item.id === action.payload.id);
+            newColors[indexItem] = action.payload;
+            if(!!indexItem) {
+                newColors.splice(indexItem, 1, action.payload)
+            }
+            return {...state, colors: newColors};
+        }
         case BOARD_ACTIONS.CHANGE_CARD_COLOR: {
             const newBoard = [...state.board];
             let indexItem = state.board.findIndex((e) => e.id === action.payload);
@@ -103,6 +112,7 @@ export const boardReducer = (state = defaultState, action: any) => {
 export const changeColorAction = (payload: number) => ({type: BOARD_ACTIONS.CHANGE_COLOR, payload});
 export const deleteColorAction = (payload: number) => ({type: BOARD_ACTIONS.DELETE_COLOR, payload});
 export const addColorAction = (payload: Icolor) => ({type: BOARD_ACTIONS.ADD_COLOR, payload});
+export const updateColorAction = (payload: Icolor) => ({type: BOARD_ACTIONS.UPDATE_COLOR, payload});
 export const changeCardColorAction = (payload: number) =>({type: BOARD_ACTIONS.CHANGE_CARD_COLOR, payload});
 export const loadBoard = () => ({type: BOARD_ACTIONS.LOAD});
 export const asyncLoadBoard = () => ({type: BOARD_ACTIONS.ASYNC_LOAD});

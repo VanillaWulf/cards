@@ -1,17 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import styles from './legend.module.css';
 
 import {useDispatch, useSelector} from "react-redux";
 import ColorItem from "../color-item/Color-item";
 import {Istate} from "../../models/Istate";
 import ColorPopup from "../color-popup/color-popup";
-import {changeColorAction, deleteColorAction, addColorAction} from "../../store/board-reducer";
+import {changeColorAction, deleteColorAction, addColorAction, updateColorAction} from "../../store/board-reducer";
 
 const Legend = () => {
 
     const colors = useSelector((state: Istate )=> state.boardPage.colors);
     const dispatch  = useDispatch();
-    const [modalOptions, setModalOptions] = useState({isOpen: false, isEdit: false, color: undefined});
+    const [modalOptions, setModalOptions] = useState({isOpen: false, isEdit: false, color: {
+            name: 'string',
+            color: '#FFF',
+            isSelected: false,
+            id: -888
+        }});
 
 
     const handleOnSubmit = (colorId: number) : void => {
@@ -23,34 +28,37 @@ const Legend = () => {
     };
 
     const handleClose = () :void => {
-        console.log(modalOptions);
-        setModalOptions({isOpen: false, isEdit: false, color: undefined});
+        setModalOptions({isOpen: false, isEdit: false, color: {
+                name: 'string',
+                color: 'string',
+                isSelected: false,
+                id: -888
+            }});
     };
 
-    const addColor = (color: string, desc: string) : void => {
-
-        // if(isEdit) {
-        //   доделать isEdit
-        // } else {
+    const changColorList = (color: string, desc: string) : void => {
+        if(modalOptions.isEdit) {
+            const newColor = {
+                name: !!desc ? desc : '',
+                color: !!color ? color : '',
+                isSelected: modalOptions.color.isSelected,
+                id: modalOptions.color.id
+            };
+         dispatch(updateColorAction(newColor))
+        } else {
             const newColor = {
                 name: !!desc ? desc : '',
                 color: !!color ? color : '',
                 isSelected: false,
                 id: colors[colors.length - 1] && colors[colors.length - 1] ? colors[colors.length - 1].id + 1 : -1
             };
-
-
             dispatch(addColorAction(newColor));
-            handleClose();
-        // }
+        }
+         handleClose();
     };
 
     const UseOpenPopup = (isEdit = false, color?: any): void => {
-        console.log(isEdit);
         setModalOptions({isOpen: true, isEdit: isEdit, color: color });
-        // useEffect(() => {
-        //     setModalOptions({isOpen: true, isEdit: isEdit, color: color });
-        // }, [modalOptions])
     };
 
     return <div className={styles.row}>
@@ -62,7 +70,7 @@ const Legend = () => {
             isOpen={modalOptions.isOpen}
             handleClose={handleClose}
             isEdit={modalOptions.isEdit}
-            handleOnSubmit={(color, desc) => addColor(color, desc)}
+            handleOnSubmit={(color, desc) => changColorList(color, desc)}
             color={modalOptions.color}
         />
     </div>

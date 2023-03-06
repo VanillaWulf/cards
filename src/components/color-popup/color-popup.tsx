@@ -14,19 +14,12 @@ interface Iprops {
 const ColorPopup = (props: Iprops) => {
     const [selectedColor, setSelectedColor] = useState(!!props.color && !!props.color.color? props.color.color : 'rgb(255,255,255)');
     const [desc, setDesc] = useState(!!props.color && !!props.color.name? props.color.name : '');
-
-    // setDesc(props.color && props.color.name? props.color.name : '');
-    // setSelectedColor(props.color && props.color.color? props.color.color : 'rgb(255,255,255)');
-
-    console.log(desc, selectedColor, props.color);
-
-    console.log(!!props.color && !!props.color.color);
+    const [isEdit, setIsEdit] = useState(!!props.isEdit ? props.isEdit : false);
 
     useEffect(() => {
             setDesc(props.color && props.color.name? props.color.name : '');
             setSelectedColor(props.color && props.color.color? props.color.color : 'rgb(255,255,255)');
             }, [props.isEdit]);
-
 
     return <div className={props.isOpen ? styles.open : styles.closed}>
         <div className={styles.modalWrp}>
